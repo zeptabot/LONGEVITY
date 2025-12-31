@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longevity Roadmap: The North Star</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .print-break {
+            page-break-inside: avoid;
+        }
+        
+        .metric-box {
+            background-color: #f1f5f9;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            border-left: 3px solid #64748b;
+        }
+
+        /* --- Mind Map Visualization --- */
+        .mindmap-container {
+            padding: 40px 20px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .mm-layout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px; 
+            min-width: 1000px;
+        }
+
+        .mm-column {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            flex: 1;
+        }
+
+        .mm-center {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        /* Center Bubble */
+        .root-bubble {
+            background: #1e293b;
+            color: white;
+            padding: 24px;
+            border-radius: 50%;
+            width: 220px;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 10px 25px -5px rgba(30, 41, 59, 0.5);
+            border: 6px solid #475569;
+            position: relative;
+        }
+
+        /* Nodes */
+        .mm-node {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px;
+            border: 2px solid;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .mm-node:hover {
+            transform: scale(1.02);
+        }
+
+        /* Colors */
+        .border-orange { border-color: #fb923c; background: #fff7ed; }
+        .border-red { border-color: #f87171; background: #fef2f2; }
+        .border-purple { border-color: #c084fc; background: #faf5ff; }
+        .border-blue { border-color: #60a5fa; background: #eff6ff; }
+        .border-green { border-color: #4ade80; background: #f0fdf4; }
+        .border-gray { border-color: #94a3b8; background: #f8fafc; }
+
+        .header-orange { color: #9a3412; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 8px; border-bottom: 1px solid #fb923c; padding-bottom: 4px; }
+        .header-red { color: #991b1b; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 8px; border-bottom: 1px solid #f87171; padding-bottom: 4px; }
+        .header-purple { color: #6b21a8; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 8px; border-bottom: 1px solid #c084fc; padding-bottom: 4px; }
+        .header-blue { color: #1e40af; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 8px; border-bottom: 1px solid #60a5fa; padding-bottom: 4px; }
+        .header-green { color: #166534; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 8px; border-bottom: 1px solid #4ade80; padding-bottom: 4px; }
+        .header-gray { color: #475569; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 8px; border-bottom: 1px solid #94a3b8; padding-bottom: 4px; }
+
+        /* Connectors */
+        .mm-column.left .mm-node::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -60px;
+            width: 60px;
+            height: 3px;
+            background: #cbd5e1;
+            z-index: -1;
+        }
+        
+        .mm-column.right .mm-node::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -60px;
+            width: 60px;
+            height: 3px;
+            background: #cbd5e1;
+            z-index: -1;
+        }
+
+        /* Typography */
+        .node-content { font-size: 0.8rem; color: #334155; line-height: 1.4; }
+        .node-label { font-weight: 700; color: #475569; font-size: 0.75rem; margin-top: 6px; }
+        .test-tag { font-size: 0.7rem; color: #64748b; font-style: italic; }
+        
+    </style>
+</head>
+<body class="p-4 md:p-8 max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <header class="mb-8 text-center">
+        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">The Longevity Architecture</h1>
+        <p class="text-slate-500 text-lg">Medicine 3.0 Strategy</p>
+    </header>
+
+    <!-- Visual Mind Map -->
+    <div class="mindmap-container">
+        <div class="mm-layout">
+            
+            <!-- LEFT COLUMN -->
+            <div class="mm-column left">
+                
+                <!-- ARM 1: METABOLIC -->
+                <div class="mm-node border-orange">
+                    <div class="header-orange">Metabolic Dysfunction</div>
+                    <div class="node-content">
+                        <p class="italic mb-2 text-xs">"Gateway to other Horsemen"</p>
+                        <div class="node-label">Aggressive Targets (Medicine 3.0)</div>
+                        <ul class="list-disc ml-4 space-y-1">
+                            <li>Fasting Insulin < 6 uIU/mL <span class="test-tag">[Blood]</span></li>
+                            <li>HbA1c < 5.1% <span class="test-tag">[Blood]</span></li>
+                            <li>Visceral Fat: Minimal <span class="test-tag">[DEXA]</span></li>
+                            <li>ALT < 30 U/L <span class="test-tag">[Liver Panel]</span></li>
+                            <li>Uric Acid < 5.0 mg/dL <span class="test-tag">[Blood]</span></li>
+                            <li>Triglycerides < 100 mg/dL <span class="test-tag">[Lipid]</span></li>
+                        </ul>
+                        <div class="mt-2 bg-orange-100 p-2 rounded">
+                            <p class="font-bold text-xs text-orange-800">MetSyn Criteria (Any 3)</p>
+                            <ul class="text-xs list-disc ml-4">
+                                <li>BP > 130/85 mmHg</li>
+                                <li>Triglycerides > 150 mg/dL</li>
+                                <li>HDL Cholesterol < 40(M)/50(W)</li>
+                                <li>Waist > 40"(M)/35"(W)</li>
+                                <li>Glucose > 110 mg/dL</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ARM 2: CVD -->
+                <div class="mm-node border-red">
+                    <div class="header-red">Atherosclerotic CVD</div>
+                    <div class="node-content">
+                        <div class="node-label">Target</div>
+                        <div>LDL-C: 10-20 mg/dL (Proxy for ApoB)</div>
+                        <div class="node-label">Screening</div>
+                        <ul class="list-disc ml-4 space-y-1">
+                            <li>CAC Score > 0 = Calcified Plaque <span class="test-tag">[CT Non-Contrast]</span></li>
+                            <li>Soft Plaque <span class="test-tag">[CT Angiogram]</span></li>
+                            <li>ApoB < 60 mg/dL <span class="test-tag">[Blood]</span></li>
+                            <li>Lp(a) < 50 nmol/L <span class="test-tag">[Blood - Once]</span></li>
+                        </ul>
+                        <div class="node-label">Prevention</div>
+                        <div>Statins / PCSK9i</div>
+                    </div>
+                </div>
+
+                <!-- ARM 3: CANCER -->
+                <div class="mm-node border-purple">
+                    <div class="header-purple">Cancer</div>
+                    <div class="node-content">
+                        <div class="node-label">Screening</div>
+                        <div>Aggressive & Early <span class="test-tag">[MRI / Biopsy / Scope]</span></div>
+                        <div class="node-label">Prevention</div>
+                        <ul class="list-disc ml-4">
+                            <li>Avoid Insulin Resistance</li>
+                            <li>Avoid Obesity</li>
+                            <li>Avoid Pollution</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CENTER -->
+            <div class="mm-center">
+                <div class="root-bubble">
+                    <div class="font-black text-3xl mb-2">STRATEGY</div>
+                    <div class="text-base font-semibold opacity-90">Delay the 4 Horsemen</div>
+                    <div class="text-xs mt-4 opacity-75 uppercase tracking-widest">Maximize<br>Healthspan</div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="mm-column right">
+
+                <!-- ARM 4: NEURO -->
+                <div class="mm-node border-blue">
+                    <div class="header-blue">Neurodegenerative</div>
+                    <div class="node-content">
+                        <div class="node-label">Cause: Reduced Brain Energy</div>
+                        <ul class="list-disc ml-4 mb-2">
+                            <li>Reduced Blood Flow <span class="test-tag block">(Link: Cerebrovascular / Cardiovascular Dysfunction)</span></li>
+                            <li>Reduced Glucose Metabolism <span class="test-tag block">(Link: Metabolic Dysfunction)</span></li>
+                        </ul>
+                        <div class="node-label">Prevention</div>
+                        <ul class="list-disc ml-4 space-y-1">
+                            <li>Optimize Sleep</li>
+                            <li>Grip & Endurance</li>
+                            <li>Sauna (≥82°C, 20m, 4x/wk)</li>
+                            <li>Lower Homocysteine <span class="test-tag">[Blood]</span></li>
+                            <li>Cognitive Reserve (Complex Skills)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ARM 5: EMOTIONAL -->
+                <div class="mm-node border-green">
+                    <div class="header-green">Emotional Health</div>
+                    <div class="node-content">
+                        <div class="node-label">Slow Motion Suicide</div>
+                        <div>Addiction: Substance/Alcohol/Pornography</div>
+                        <div class="node-label">Time Bomb (Burnout)</div>
+                        <div>Addiction: Work/Exercise</div>
+                        <div class="node-label">Motivation</div>
+                        <div>Social Connection & Purpose</div>
+                    </div>
+                </div>
+
+                <!-- ARM 6: TACTICS SUMMARY -->
+                <div class="mm-node border-gray">
+                    <div class="header-gray">Tactics (Summary)</div>
+                    <div class="node-content">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <span class="font-bold block text-xs text-slate-600 uppercase">Exercise</span>
+                                <span class="text-xs">Strength, Cardio, Stability</span>
+                            </div>
+                            <div>
+                                <span class="font-bold block text-xs text-slate-600 uppercase">Nutrition</span>
+                                <span class="text-xs">Energy, Protein, Micronutrients, Adherence</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="font-bold block text-xs text-slate-600 uppercase">Sleep</span>
+                            <div class="text-xs leading-snug mt-1 space-y-1">
+                                <p><strong>• Short Term:</strong> Impaired cognitive/emotional/physical performance, acute insulin resistance, excess calories.</p>
+                                <p><strong>• Long Term:</strong> Elevated risk of all 4 Horsemen.</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="font-bold block text-xs text-slate-600 uppercase">Emotional Health</span>
+                            <span class="text-xs">Self-care</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Detailed Cheat Sheet Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- PILLAR 1: EXERCISE -->
+        <div class="tactical-card bg-white rounded-xl shadow-sm border border-slate-200 p-6 print-break">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">1</div>
+                <h2 class="text-xl font-bold text-slate-800">Exercise Tactics</h2>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-semibold text-blue-600 text-sm uppercase">Strength (3x a week)</h3>
+                    <ul class="text-sm text-slate-600 list-disc ml-4 mt-1 space-y-1">
+                        <li><strong>Pull-up:</strong> x1</li>
+                        <li><strong>OHP (Overhead Press):</strong> x3</li>
+                        <li><strong>Lunge (Barbell):</strong> x3</li>
+                        <li><strong>Row:</strong> x3</li>
+                        <li><strong>Lateral Raise:</strong> x4</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-blue-600 text-sm uppercase">Stability & Grip</h3>
+                    <ul class="text-sm text-slate-600 list-disc ml-4 mt-1 space-y-1">
+                        <li><strong>Breath (IAP):</strong> Learn abdominal breathing.</li>
+                        <li><strong>Spine:</strong> Cat-cow (Segmental).</li>
+                        <li><strong>Shoulder:</strong> Scap CAR.</li>
+                        <li><strong>Grip:</strong> Dead Hang (2m) & Carry (Bodyweight) (1-2 minutes).</li>
+                        <li><strong>Balance:</strong> Single leg > 10s (eyes closed).</li>
+                        <li><strong>Feet:</strong> No shoes while lifting. (Toe Yoga - No Equipment)</li>
+                    </ul>
+                </div>
+                
+                <!-- Split Engine Section -->
+                <div class="pt-2 border-t border-slate-100">
+                     <h3 class="font-semibold text-blue-600 text-sm uppercase">Aerobic Efficiency</h3>
+                     <ul class="text-sm text-slate-600 list-disc ml-4 mt-1 space-y-1">
+                        <li><strong>Zone 2:</strong> 3 hrs/week.</li>
+                        <li class="text-xs text-slate-500">Purpose: Mitochondrial Health & Metabolic Flexibility.</li>
+                     </ul>
+                </div>
+                <div>
+                     <h3 class="font-semibold text-blue-600 text-sm uppercase">Max Aerobic Capacity</h3>
+                     <ul class="text-sm text-slate-600 list-disc ml-4 mt-1 space-y-1">
+                        <li><strong>VO2 Max:</strong> 4x4x4 (Once a week).</li>
+                        <li class="text-xs text-slate-500">Purpose: High intensity peak output.</li>
+                     </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PILLAR 2: SLEEP -->
+        <div class="tactical-card bg-white rounded-xl shadow-sm border border-slate-200 p-6 print-break">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">2</div>
+                <h2 class="text-xl font-bold text-slate-800">Sleep Hygiene Tactics</h2>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-indigo-50 p-3 rounded-lg">
+                    <h3 class="font-semibold text-indigo-900 text-sm mb-2">The 11-Point Checklist</h3>
+                    <ul class="text-xs text-indigo-800 space-y-1.5">
+                        <li class="flex gap-2">1. Darkness 2 hrs before bed</li>
+                        <li class="flex gap-2">2. No smart devices 1 hr before</li>
+                        <li class="flex gap-2">3. No food 3 hrs before sleep</li>
+                        <li class="flex gap-2">4. 30 min outdoor daylight (AM)</li>
+                        <li class="flex gap-2">5. Cool Room (~18°C)</li>
+                        <li class="flex gap-2">6. Hot Bath/Shower</li>
+                        <li class="flex gap-2">7. Fixed wake-up time</li>
+                        <li class="flex gap-2">8. If sleepless: change room, boring activity</li>
+                        <li class="flex gap-2">9. Avoid stress/news < 1hr before</li>
+                        <li class="flex gap-2">10. Wind down: Write worries, Rosary, Meditation</li>
+                        <li class="flex gap-2 font-bold">11. Target: 8-9 hours in bed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLAR 3: NUTRITION & BIOCHEMISTRY -->
+        <div class="tactical-card bg-white rounded-xl shadow-sm border border-slate-200 p-6 print-break">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">3</div>
+                <h2 class="text-xl font-bold text-slate-800">Nutrition Tactics</h2>
+            </div>
+            
+            <!-- Section 1: Energy -->
+            <div class="nutrition-section">
+                <h3 class="font-semibold text-emerald-600 text-sm uppercase mb-2">I. Control Energy</h3>
+                <ul class="text-sm text-slate-600 list-disc ml-4 space-y-1">
+                    <li><strong>TRE (Time Restricted):</strong> 12pm - 8pm window.</li>
+                    <li><strong>Restrictions:</strong> No sugar, no ultra-processed foods.</li>
+                </ul>
+            </div>
+
+            <!-- Section 2: Macronutrients -->
+            <div class="nutrition-section">
+                <h3 class="font-semibold text-emerald-600 text-sm uppercase mb-2">II. Control Macronutrients</h3>
+                
+                <!-- Protein -->
+                <div class="mb-3">
+                    <p class="font-bold text-slate-700 text-sm">A. Protein</p>
+                    <ul class="text-sm text-slate-600 ml-2">
+                        <li>Target: 2.2 g/kg (Range 2.2-3.7)</li>
+                        <li>Source: Animal > Plant</li>
+                    </ul>
+                </div>
+
+                <!-- Carbs -->
+                <div class="mb-3">
+                    <p class="font-bold text-slate-700 text-sm">B. Carbs</p>
+                    <ul class="text-sm text-slate-600 ml-2">
+                        <li>Type: Fibrous, non-refined, whole grain only.</li>
+                        <li><strong>Avoid Spikes:</strong> Monitor via CGM.</li>
+                    </ul>
+                     <div class="metric-box">
+                        <p>Target: 100 ± 15 mg/dL</p>
+                    </div>
+                </div>
+
+                <!-- Fats -->
+                <div class="mb-1">
+                    <p class="font-bold text-slate-700 text-sm">C. Fats</p>
+                    <div class="text-sm text-slate-600 ml-2 space-y-2">
+                        <p><strong>MUFA (50-55%):</strong> <span class="bg-yellow-200 px-1 text-xs font-bold rounded">BEST</span> Olive Oil, Avocados.</p>
+                        <p><strong>SFA (15-20%):</strong> Minimize Butter/Lard.</p>
+                        <div>
+                            <p><strong>PUFA (Rest):</strong> Fish, Seeds.</p>
+                            <!-- Omega 3 Protocol Subsection -->
+                            <div class="pl-2 border-l-2 border-emerald-100 mt-2">
+                                 <p class="font-semibold text-xs text-emerald-700 uppercase mb-1">Omega-3 Protocol</p>
+                                 <ul class="text-xs text-slate-600 list-disc ml-4 space-y-1">
+                                    <li><strong>Goal:</strong> Increase EPA/DHA.</li>
+                                    <li><strong>Sources:</strong> Fatty fish (Salmon) or Fish Oil.</li>
+                                    <li><strong>Avoid:</strong> High Omega-6 seed oils.</li>
+                                    <li><strong>Target:</strong> 8-12% RBC <span class="text-slate-400 block">[Test: Omega-3 Index]</span></li>
+                                 </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLAR 4: NEURO & EMOTIONAL (Tactics Only) -->
+        <div class="tactical-card bg-white rounded-xl shadow-sm border border-slate-200 p-6 print-break">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold">4</div>
+                <h2 class="text-xl font-bold text-slate-800">Neuro & Emotional</h2>
+            </div>
+            <div class="space-y-4">
+                 <div>
+                    <h3 class="font-semibold text-purple-600 text-sm uppercase">Emotional Tactics</h3>
+                    <ul class="text-sm text-slate-600 list-disc ml-4 mt-1 space-y-1">
+                        <li><strong>DBT:</strong> Mindfulness, Opposite Actions.</li>
+                        <li><strong>Reframing:</strong> See others' perspective.</li>
+                        <li><strong>Therapy:</strong> Trauma-informed professional.</li>
+                        <li><strong>Connection:</strong> Prioritize social relationships.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-purple-600 text-sm uppercase">Neurodegeneration Prevention</h3>
+                    <ul class="text-sm text-slate-600 list-disc ml-4 mt-1 space-y-1">
+                        <li><strong>Sauna:</strong> ≥82°C, 20min, ≥4x/week. <br><span class="text-xs text-slate-500">(Prevents Alzheimer's & Mimics Cardio)</span></li>
+                        <li><strong>Physical:</strong> Brush & Floss.</li>
+                        <li><strong>Cognitive:</strong> Develop complex skills (Reserve).</li>
+                        <li><strong>Supplements:</strong> Vit B, Omega-3, Vit D (Lower Homocysteine).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- STRATEGY CARD -->
+        <div class="tactical-card bg-white rounded-xl shadow-sm border border-slate-200 p-6 print-break bg-slate-50">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold">S</div>
+                <h2 class="text-xl font-bold text-slate-800">The "Decades" Algorithms</h2>
+            </div>
+            <div class="space-y-3 text-sm">
+                 <p class="text-xs text-slate-500 italic">Adapting Medicine 3.0 to life stages.</p>
+                <div class="border-l-4 border-slate-300 pl-3">
+                    <strong>Time is scarce:</strong>
+                    <p class="text-slate-600"> Replace Zone 2 with Commuting. Outsource mealprep. </p>
+                </div>
+                <div class="border-l-4 border-slate-300 pl-3">
+                    <strong>Money is scarce :</strong>
+                    <p class="text-slate-600">Money is scarce. Reduce testing frequency. Bulk whole foods. Keep Omega 3, ViD, and Creatine as only supplements.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="mt-12 text-center text-slate-400 text-xs pb-8">
+        <p>Based on "Outlive" by Peter Attia, MD. | Personalized Reference Guide</p>
+    </footer>
+</body>
+</html>
